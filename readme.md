@@ -22,12 +22,16 @@ Uživatelé mohou:
    git clone https://github.com/uzivatel/receptaria.git
    cd receptaria
    composer install
-   cp app/config/config.local.neon.dist app/config/config.local.neon
+   mv app/config/config.local.neon.dist app/config/config.local.neon
    mysql -u uživatel -p receptaria < database/receptaria_dump.sql
    php -S localhost:8000 -t www
    http://localhost:8000
    
 
+## 🛠️ Uživatele
+- user@receptaria.cz
+- heslo123
 
-
+- admin@receptaria.cz
+- Heslo123
 

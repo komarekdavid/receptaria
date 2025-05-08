@@ -1,0 +1,35 @@
+{block content}
+<h1 class="text-4xl font-extrabold text-center text-gray-900 dark:text-white my-12">➕ Nový příspěvek do fóra</h1>
+
+<div class="max-w-2xl mx-auto px-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xl p-8 space-y-6">
+
+  <form n:name="forumForm" class="space-y-6">
+    
+    <!-- Název -->
+    <div>
+      <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Název příspěvku</label>
+      <input n:name="title" class="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 transition" />
+    </div>
+
+    <!-- Obsah -->
+    <div>
+      <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Obsah</label>
+      <textarea n:name="content" rows="8" class="w-full rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 transition resize-none"></textarea>
+    </div>
+
+    <!-- Tlačítko -->
+    <div class="text-right">
+      <button n:name="send" class="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium px-6 py-2 rounded-xl shadow transition">
+        💬 Vytvořit příspěvek
+      </button>
+    </div>
+
+  </form>
+
+  <!-- Zpět -->
+  <div class="text-center pt-6">
+    <a href="{link Forum:default}" class="text-sm text-blue-600 hover:underline">← Zpět na fórum</a>
+  </div>
+
+</div>
+{/block}

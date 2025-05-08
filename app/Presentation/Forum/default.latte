@@ -1,0 +1,54 @@
+{block content}
+<h1 class="text-4xl font-extrabold text-center text-gray-900 dark:text-white my-12">📜 Diskusní fórum</h1>
+
+<div class="max-w-3xl mx-auto px-4">
+
+  <div class="flex justify-end mb-8">
+    {if $user->isLoggedIn()}
+      <a n:href="add" class="bg-orange-500 hover:bg-orange-600 text-white text-sm px-5 py-2 rounded-full shadow-md transition">
+        ➕ Nový příspěvek
+      </a>
+    {else}
+      <p class="text-sm text-gray-500 dark:text-gray-400 italic">Pro přidání příspěvku se přihlas.</p>
+    {/if}
+  </div>
+
+  {if count($posts)}
+    <div class="space-y-6">
+      {foreach $posts as $post}
+        <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow hover:shadow-lg transition duration-300 overflow-hidden">
+
+          <a n:href="detail id => $post->id" class="block p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200">
+            <div class="flex justify-between items-center mb-2">
+              <h2 class="text-xl font-bold text-gray-900 dark:text-white hover:text-orange-500 transition">
+                {$post->title}
+              </h2>
+              <span class="text-xs text-gray-500 dark:text-gray-400">
+                🕒 {$post->created_at|date:'j. n. Y H:i'}
+              </span>
+            </div>
+
+            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+              👤 {$post->ref('user', 'author_id')->name}
+            </p>
+
+            <p class="text-sm text-gray-700 dark:text-gray-300 line-clamp-3 leading-relaxed">
+              {$post->content|truncate:160}
+            </p>
+          </a>
+
+          {if $user->getId() === $post->author_id || $user->isInRole('admin')}
+            <div class="flex justify-end items-center gap-4 px-6 py-3 border-t border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-sm">
+              <a n:href="edit id => $post->id" class="text-yellow-500 hover:underline transition">✏️ Upravit</a>
+              <a n:href="delete id => $post->id" onclick="return confirm('Opravdu smazat příspěvek?')" class="text-red-500 hover:underline transition">🗑️ Smazat</a>
+            </div>
+          {/if}
+        </div>
+      {/foreach}
+    </div>
+  {else}
+    <p class="text-center text-sm text-gray-500 dark:text-gray-400 italic mt-10">Zatím žádné příspěvky. Buď první, kdo něco napíše!</p>
+  {/if}
+
+</div>
+{/block}

@@ -1,0 +1,66 @@
+{block content}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+
+  <div class="max-w-7xl mx-auto px-4 py-12 space-y-20">
+
+    <!-- Titulek -->
+    <div class="text-center">
+      <h1 class="text-4xl font-extrabold mb-2">🍽️ Vítej ve světě chutí!</h1>
+      <p class="text-gray-600 dark:text-gray-400">Objev ty nejlepší recepty a inspiruj se od našich nejoblíbenějších kuchařů.</p>
+    </div>
+
+    <!-- TOP 3 Kuchaři -->
+    <section>
+      <h2 class="text-2xl font-bold mb-6">👨‍🍳 Nejoblíbenější kuchaři</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {foreach $topUsers as $chef}
+          <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-6 rounded-xl shadow hover:shadow-lg transition">
+            <div class="text-4xl mb-2 text-center">👨‍🍳</div>
+            <div class="text-lg font-semibold text-center mb-1">{$chef->name}</div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 text-center">{$chef->recipe_count} receptů</p>
+          </div>
+        {/foreach}
+      </div>
+    </section>
+
+    <!-- TOP 3 Recepty -->
+    <section>
+      <h2 class="text-2xl font-bold mb-6">🔥 Nejoblíbenější recepty</h2>
+      <div class="space-y-6">
+        {foreach $topRecipes as $recipe}
+            <div class="bg-white dark:bg-gray-800 border shadow-stone-700/50 border-gray-200 dark:border-gray-700 rounded-xl hover:shadow-xl transition overflow-hidden flex flex-col sm:flex-row">
+
+            <a n:href="Recipe:detail id => $recipe->id" class="sm:w-1/3 w-full h-60 sm:h-auto">
+              {if $recipe->image}
+                <img src="/uploads/{$recipe->image}" alt="{$recipe->title}" class="w-full h-full object-cover hover:brightness-90 transition" />
+              {else}
+                <div class="w-full h-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300">Bez obrázku</div>
+              {/if}
+            </a>
+
+            <div class="p-6 sm:w-2/3 space-y-3 flex flex-col justify-between">
+              <div>
+                <a n:href="Recipe:detail id => $recipe->id">
+                  <h3 class="text-xl font-bold text-gray-900 dark:text-white hover:text-orange-500 transition">{$recipe->title}</h3>
+                </a>
+                <p class="text-sm text-gray-500 dark:text-gray-400">
+                  ⏱️ {$recipe->duration} min | 📊 {$recipe->difficulty} | 👁️ {$recipe->views_count}
+                </p>
+                <p class="text-sm text-gray-700 dark:text-gray-300 mt-2 line-clamp-3">{$recipe->content|truncate:150}</p>
+              </div>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                Autor: {$recipe->ref('user', 'author_id')->name}
+              </p>
+            </div>
+
+          </div>
+        {/foreach}
+      </div>
+    </section>
+
+  </div>
+
+</div>
+
+
+{/block}

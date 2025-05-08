@@ -1,0 +1,59 @@
+{block content}
+<h1 class="text-3xl font-extrabold mb-10 text-gray-100 text-center">Upravit recept</h1>
+
+<div class="flex justify-center">
+  <div class="w-full max-w-2xl bg-gray-800 border border-gray-700 shadow-xl rounded-2xl p-8">
+    <form n:name="recipeForm" class="space-y-6">
+
+        <div>
+            <label class="block text-base text-gray-300 mb-1">Název</label>
+            <input n:name="title" class="w-full p-4 text-lg rounded bg-gray-700 text-white border border-gray-600" />
+          </div>
+    
+          <div>
+            <label class="block text-base text-gray-300 mb-1">Popis</label>
+            <textarea n:name="content" class="w-full p-4 text-lg rounded bg-gray-700 text-white border border-gray-600 min-h-[150px]"></textarea>
+          </div>
+    
+          <div>
+            <label class="block text-base text-gray-300 mb-1">Obrázek</label>
+            <input n:name="image" class="w-full bg-gray-700 text-white rounded border border-gray-600" />
+          </div>
+    
+          <div>
+            <label class="block text-base text-gray-300 mb-1">Kategorie</label>
+            <select n:name="category_id" class="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded">
+            </select>
+          </div>
+    
+          <div class="flex gap-4">
+            <div class="w-1/2">
+              <label class="block text-base text-gray-300 mb-1">Doba (min)</label>
+              <input n:name="duration" class="w-full p-3 text-lg rounded bg-gray-700 text-white border border-gray-600" />
+            </div>
+    
+            <div class="w-1/2">
+              <label class="block text-base text-gray-300 mb-1">Obtížnost</label>
+              <select n:name="difficulty" class="w-full p-3 bg-gray-700 text-white border border-gray-600 rounded"></select>
+            </div>
+          </div>
+    
+          <div>
+            <label class="block text-base text-gray-300 mb-1">Suroviny (čárkou)</label>
+            <textarea n:name="ingredients" class="w-full p-4 text-lg rounded bg-gray-700 text-white border border-gray-600 min-h-[100px]"></textarea>
+          </div>
+    
+          <div class="flex items-center gap-2">
+            <input n:name="comments_enabled" class="rounded" />
+            <label class="text-sm text-gray-300">Povolit komentáře</label>
+          </div>
+    
+          <button n:name="send"
+                  class="w-full py-3 px-6 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold text-base shadow">
+            💾 Uložit recept
+          </button>
+
+    </form>
+  </div>
+</div>
+{/block}

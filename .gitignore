@@ -1,0 +1,8 @@
+# Konfigurační soubory s citlivými údaji
+config/common.neon
+
+# Uživatelská data nebo buildy
+temp/*
+log/*
+vendor/
+node_modules

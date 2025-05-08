@@ -1,0 +1,54 @@
+{block content}
+<h1 class="text-3xl font-extrabold text-center text-gray-900 dark:text-white my-12">
+    🍽️ Recepty: {$categoryName}
+  </h1>
+  
+<div class="max-w-2xl mx-auto space-y-6">
+  {foreach $recipes as $recipe}
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-hidden transition hover:shadow-md">
+
+      <a n:href="Recipe:detail id => $recipe->id" class="block">
+        {if $recipe->image}
+          <img src="/uploads/{$recipe->image}" alt="{$recipe->title}" class="w-full h-48 object-cover transition duration-300 hover:brightness-90">
+        {/if}
+      </a>
+
+      <div class="p-5 space-y-2">
+        <a n:href="Recipe:detail id => $recipe->id">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white hover:text-orange-500 transition">
+            {$recipe->title}
+          </h2>
+        </a>
+
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          🕒 {$recipe->duration} min &nbsp;|&nbsp; 📊 {$recipe->difficulty} &nbsp;|&nbsp; 👁️ {$recipe->views_count}
+        </p>
+
+        {if $recipe->rating_count > 0}
+          <p class="text-yellow-400 text-sm">⭐ {sprintf('%.1f', $recipe->rating_sum / $recipe->rating_count)} / 5</p>
+        {/if}
+
+        <p class="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">
+          {$recipe->content|truncate:160}
+        </p>
+
+        <div class="flex justify-between items-center pt-4 text-xs text-gray-500 dark:text-gray-400">
+          <div>
+            👨‍🍳 {$recipe->ref('user', 'author_id')->name}<br>
+            🏷️ <a n:href="Recipe:default category => $recipe->category_id" class="text-blue-600 hover:underline">
+              {$recipe->ref('category', 'category_id')->name}
+            </a>
+          </div>
+
+          {if $user->isInRole('admin')}
+            <div class="flex gap-3 text-sm">
+              <a n:href="Recipe:edit id => $recipe->id" class="text-yellow-500 hover:underline">✏️</a>
+              <a n:href="Recipe:delete id => $recipe->id" onclick="return confirm('Smazat recept?')" class="text-red-500 hover:underline">🗑️</a>
+            </div>
+          {/if}
+        </div>
+      </div>
+    </div>
+  {/foreach}
+</div>
+{/block}

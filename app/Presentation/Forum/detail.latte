@@ -1,0 +1,66 @@
+{block content}
+<div class="max-w-4xl mx-auto mt-10 mb-20 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-8 space-y-6">
+
+  <!-- Titulek a metadata -->
+  <div>
+    <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-1">📣 {$post->title}</h1>
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+      👤 {$post->ref('user', 'author_id')->name} • 🕒 {$post->created_at|date:'j. n. Y H:i'}
+    </p>
+  </div>
+
+  <!-- Obsah -->
+  <div class="text-gray-800 dark:text-gray-200 leading-relaxed whitespace-pre-line">
+    {$post->content}
+  </div>
+
+  <!-- Admin/autor akce -->
+  {if $user->getId() === $post->author_id || $user->isInRole('admin')}
+    <div class="flex gap-4 pt-4">
+      <a n:href="edit id => $post->id" class="text-yellow-500 hover:underline text-sm">✏️ Upravit</a>
+      <a n:href="delete id => $post->id" onclick="return confirm('Opravdu chceš příspěvek smazat?')" class="text-red-500 hover:underline text-sm">🗑️ Smazat</a>
+    </div>
+  {/if}
+
+ <!-- Komentáře -->
+    <div>
+        <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">💬 Komentáře</h2>
+
+        {if count($comments)}
+        <div class="space-y-4">
+            {foreach $comments as $comment}
+            <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+                <div class="text-sm text-gray-600 dark:text-gray-300">
+                <strong>{$comment->ref('user', 'author_id')->name}</strong> • {$comment->created_at|date:'j. n. Y H:i'}
+                </div>
+                <p class="text-gray-800 dark:text-white mt-2">{$comment->content}</p>
+            </div>
+            {/foreach}
+        </div>
+        {else}
+        <p class="text-sm text-gray-500 italic">Zatím žádné komentáře.</p>
+        {/if}
+    </div>
+
+    <!-- Formulář pro přidání komentáře -->
+    {if $user->isLoggedIn()}
+        <div class="mt-8">
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">📝 Přidat komentář</h2>
+
+        <form n:name="commentForm" class="space-y-4">
+            <textarea n:name="content" rows="4" placeholder="Napiš svůj komentář..." class="w-full p-3 rounded border dark:bg-gray-700 dark:text-white dark:border-gray-600"></textarea>
+            <button n:name="send" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+            Odeslat
+            </button>
+        </form>
+        </div>
+    {else}
+        <p class="italic text-sm text-center text-gray-500 mt-6">Přihlas se pro přidání komentáře.</p>
+    {/if}
+
+    <!-- Navigace zpět -->
+    <div class="pt-6 text-center">
+        <a href="{link Forum:default}" class="text-sm text-blue-600 hover:underline">← Zpět na fórum</a>
+    </div>
+    </div>
+{/block}

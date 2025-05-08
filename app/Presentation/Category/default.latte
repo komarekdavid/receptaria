@@ -1,0 +1,42 @@
+{block content}
+<h1 class="text-3xl font-extrabold mb-8 text-gray-900 dark:text-white text-center">Seznam kategorií</h1>
+
+<div class="flex justify-center mb-6">
+  <a href="{link Category:add}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium py-2 px-5 rounded-xl shadow transition">
+    ➕ Přidat kategorii
+  </a>
+</div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+  {foreach $categories as $category}
+    <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow p-6 flex flex-col justify-between">
+
+      <div>
+        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
+          {$category->name}
+        </h2>
+
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+          {$category->description}
+        </p>
+      </div>
+
+      <div class="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700 mt-4 text-sm">
+        <span class="text-xs text-gray-500 dark:text-gray-400">
+          Vytvořeno: {$category->created_at|date:'j. n. Y H:i'}
+        </span>
+
+        <div class="flex gap-2">
+          <a n:href="edit, id => $category->id" class="text-yellow-500 hover:text-yellow-600 font-medium transition">
+            ✏️ Upravit
+          </a>
+          <a n:href="delete!, id => $category->id" onclick="return confirm('Opravdu smazat tuto kategorii?')" class="text-red-500 hover:text-red-600 font-medium transition">
+            🗑️ Smazat
+          </a>
+        </div>
+      </div>
+
+    </div>
+  {/foreach}
+</div>
+{/block}

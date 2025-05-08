@@ -1,0 +1,133 @@
+{block content}
+<div class="max-w-3xl mx-auto mt-10 mb-20 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-6 sm:p-10 space-y-10">
+
+  <!-- Titulek -->
+  <div class="space-y-2">
+    <h1 class="text-4xl font-extrabold text-gray-900 dark:text-white flex items-center gap-3">
+      🍽️ {$recipe->title}
+    </h1>
+    <div class="text-sm text-gray-500 dark:text-gray-400">
+      👨‍🍳 Autor: <span class="font-medium text-gray-800 dark:text-white">{$recipe->ref('user', 'author_id')->name}</span>
+      |
+      🏷️ Kategorie: 
+      <a n:href="Recipe:default category => $recipe->category_id" class="text-blue-600 hover:underline">
+        {$recipe->ref('category', 'category_id')->name}
+      </a>
+    </div>
+  </div>
+
+  <!-- Metadata -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm text-gray-700 dark:text-gray-300">
+    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-center shadow-sm">
+      ⏱️ <div class="font-semibold text-lg">{$recipe->duration} min</div>
+      <div class="text-xs text-gray-500 dark:text-gray-400">Doba přípravy</div>
+    </div>
+    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-center shadow-sm">
+      📊 <div class="font-semibold text-lg capitalize">{$recipe->difficulty}</div>
+      <div class="text-xs text-gray-500 dark:text-gray-400">Obtížnost</div>
+    </div>
+    <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-xl text-center shadow-sm">
+      👁️ <div class="font-semibold text-lg">{$recipe->views_count}</div>
+      <div class="text-xs text-gray-500 dark:text-gray-400">Zhlédnutí</div>
+    </div>
+  </div>
+
+  <!-- Hodnocení -->
+  {if $averageRating !== null}
+    <div class="bg-yellow-50 dark:bg-gray-700 border border-yellow-300 dark:border-yellow-600 p-4 rounded-xl text-center text-yellow-600 dark:text-yellow-400 shadow">
+      ⭐ Hodnocení: <span class="font-semibold text-lg">{number_format($averageRating, 1)} / 5</span>
+    </div>
+  {/if}
+
+  <!-- Obrázek -->
+  {if $recipe->image}
+    <img src="/uploads/{$recipe->image}" alt="{$recipe->title}" class="w-full h-64 sm:h-96 object-cover rounded-xl shadow-md">
+  {/if}
+
+  <!-- Popis -->
+  <div>
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">📝 Popis receptu</h2>
+    <p class="text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed text-justify">
+      {$recipe->content}
+    </p>
+  </div>
+
+  <!-- Suroviny -->
+  <div>
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-2">🧂 Suroviny</h2>
+    <ul class="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
+      {foreach $ingredients as $item}
+        <li>{$item}</li>
+      {/foreach}
+    </ul>
+  </div>
+
+  <!-- Hodnocení form -->
+  {if $recipe->comments_enabled}
+    <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-xl shadow space-y-4">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-white">⭐ Ohodnoť tento recept</h2>
+      <form n:name="ratingForm" class="flex flex-col sm:flex-row gap-4 sm:items-center">
+        <select n:name="rating"
+                class="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-sm text-gray-800 dark:text-white rounded px-3 py-2 w-full sm:w-auto">
+          <option value="">Vyber hvězdy</option>
+          <option value="1">1 ⭐</option>
+          <option value="2">2 ⭐⭐</option>
+          <option value="3">3 ⭐⭐⭐</option>
+          <option value="4">4 ⭐⭐⭐⭐</option>
+          <option value="5">5 ⭐⭐⭐⭐⭐</option>
+        </select>
+        <button n:name="send"
+                class="bg-blue-600 text-white text-sm px-4 py-2 rounded hover:bg-blue-700 transition w-full sm:w-auto">
+          Odeslat
+        </button>
+      </form>
+    </div>
+  {else}
+    <p class="italic text-sm text-gray-500 dark:text-gray-400 text-center">💬 Komentáře k tomuto receptu jsou vypnuté.</p>
+  {/if}
+
+  {if $recipe->comments_enabled}
+    <div class="mt-8">
+        <h2 class="text-xl font-semibold mb-2">💬 Přidej komentář</h2>
+
+        {if $user->isLoggedIn()}
+        <form n:name="commentForm" class="space-y-4">
+            <textarea n:name="content" rows="4" class="w-full p-3 rounded border dark:bg-gray-700 dark:text-white dark:border-gray-600"></textarea>
+            <button n:name="send" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+            Odeslat
+            </button>
+        </form>
+        {else}
+        <p class="text-sm text-red-500">
+            Pro přidání komentáře se prosím <a n:href="Auth:in" class="underline hover:text-red-700">přihlas</a>.
+        </p>
+        {/if}
+    </div>
+    {/if}
+
+    {if count($comments)}
+    <div class="mt-10 space-y-4">
+        <h2 class="text-xl font-semibold">🗨️ Komentáře</h2>
+        {foreach $comments as $comment}
+        <div class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg">
+            <div class="text-sm text-gray-600 dark:text-gray-300">
+            <strong>{$comment->ref('user', 'author_id')->name}</strong> • 
+            {$comment->created_at|date:'j. n. Y H:i'}
+            </div>
+            <p class="text-gray-800 dark:text-white mt-2">{$comment->content}</p>
+        </div>
+        {/foreach}
+    </div>
+    {/if}
+
+
+
+
+  <!-- Navigace -->
+  <div class="pt-6 text-center">
+    <a href="{link Recipe:default}" class="inline-block text-sm text-blue-600 hover:underline">
+      ← Zpět na seznam receptů
+    </a>
+  </div>
+</div>
+{/block}

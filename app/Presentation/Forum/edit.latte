@@ -1,0 +1,31 @@
+{block content}
+<div class="max-w-2xl mx-auto mt-10 mb-20 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-xl rounded-2xl p-8 space-y-6">
+
+  <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white text-center mb-4">✏️ Úprava příspěvku</h1>
+
+  <form n:name="editForm" class="space-y-5">
+    
+    <div>
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="title">Název</label>
+      <input n:name="title" class="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500" />
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" for="content">Obsah</label>
+      <textarea n:name="content" rows="6" class="w-full px-4 py-2 rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+    </div>
+
+    <div class="text-center">
+      <button n:name="send" class="bg-orange-500 hover:bg-orange-600 text-white text-sm px-6 py-2 rounded-xl shadow transition">
+        💾 Uložit změny
+      </button>
+    </div>
+
+  </form>
+
+  <div class="text-center mt-6">
+    <a href="{link Forum:default}" class="text-sm text-blue-600 hover:underline">← Zpět na fórum</a>
+  </div>
+
+</div>
+{/block}

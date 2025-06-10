@@ -80,9 +80,25 @@ final class UserPresenter extends Nette\Application\UI\Presenter
 
     public function actionDelete(int $id): void
     {
+        $identity = $this->getUser()->getIdentity();
+
+        if (!$identity) {
+            $this->flashMessage('Nejste přihlášený.', 'error');
+            $this->redirect('Sign:in');
+            return;
+        }
+
+        if ((int) $identity->id === $id) {
+            $this->flashMessage('Nemůžete smazat sami sebe.', 'error');
+            $this->redirect('User:');
+
+            return;
+        }
+
         $this->userFacade->deleteUser($id);
         $this->flashMessage('Uživatel byl smazán.', 'success');
-        $this->redirect('this');
+        $this->redirect('User:');
     }
+
     
 }

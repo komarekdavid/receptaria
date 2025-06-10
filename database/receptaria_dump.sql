@@ -1,5 +1,4 @@
-
-
+SET FOREIGN_KEY_CHECKS=0;
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 --
 -- Struktura tabulky `category`
 --
-
+DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -42,7 +41,7 @@ INSERT INTO `category` (`id`, `name`, `description`, `created_at`) VALUES
 --
 -- Struktura tabulky `comment`
 --
-
+DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `id` int(10) UNSIGNED NOT NULL,
   `recipe_id` int(11) NOT NULL,
@@ -64,7 +63,7 @@ INSERT INTO `comment` (`id`, `recipe_id`, `author_id`, `content`, `created_at`) 
 --
 -- Struktura tabulky `forum_comment`
 --
-
+DROP TABLE IF EXISTS `forum_comment`;
 CREATE TABLE `forum_comment` (
   `id` int(10) UNSIGNED NOT NULL,
   `post_id` int(10) UNSIGNED NOT NULL,
@@ -86,7 +85,7 @@ INSERT INTO `forum_comment` (`id`, `post_id`, `author_id`, `content`, `created_a
 --
 -- Struktura tabulky `forum_post`
 --
-
+DROP TABLE IF EXISTS `forum_post`;
 CREATE TABLE `forum_post` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -110,7 +109,7 @@ INSERT INTO `forum_post` (`id`, `title`, `content`, `author_id`, `created_at`, `
 --
 -- Struktura tabulky `recipe`
 --
-
+DROP TABLE IF EXISTS `recipe`;
 CREATE TABLE `recipe` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -145,7 +144,7 @@ INSERT INTO `recipe` (`id`, `title`, `content`, `image`, `author_id`, `category_
 --
 -- Struktura tabulky `user`
 --
-
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(100) NOT NULL,
@@ -287,3 +286,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+SET FOREIGN_KEY_CHECKS=1;
